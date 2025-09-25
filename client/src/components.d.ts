@@ -8,9 +8,22 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AboutOasisPage: typeof import('./components/AboutOasisPage.vue')['default']
+    AdviserPage: typeof import('./components/AdviserPage.vue')['default']
     AppFooter: typeof import('./components/AppFooter.vue')['default']
+    ChatInterface: typeof import('./components/ChatInterface.vue')['default']
+    CropPlanner: typeof import('./components/CropPlanner.vue')['default']
+    Dashboard: typeof import('./components/Dashboard.vue')['default']
+    DrOasisPage: typeof import('./components/DrOasisPage.vue')['default']
+    GardenJournal: typeof import('./components/GardenJournal.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
+    HomeView: typeof import('./components/HomeView.vue')['default']
+    MainLayout: typeof import('./components/MainLayout.vue')['default']
+    NavigationDrawer: typeof import('./components/NavigationDrawer.vue')['default']
+    PlantHealthAnalyzer: typeof import('./components/PlantHealthAnalyzer.vue')['default']
+    PlantLibrary: typeof import('./components/PlantLibrary.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    WelcomeChatInterface: typeof import('./components/WelcomeChatInterface.vue')['default']
   }
 }
