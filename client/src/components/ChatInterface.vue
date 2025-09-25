@@ -285,7 +285,7 @@ const sendMessage = async () => {
   isTyping.value = true
   
   try {
-    const response = await fetch('http://localhost:5000/chat', {
+    const response = await fetch('http://127.0.0.1:5000/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -362,7 +362,7 @@ const uploadImage = async () => {
     const formData = new FormData()
     formData.append('file', selectedFile.value)
 
-    const response = await fetch('http://localhost:5000/plant-health', {
+    const response = await fetch('http://127.0.0.1:5000/plant-health', {
       method: 'POST',
       body: formData
     })

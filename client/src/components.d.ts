@@ -24,6 +24,8 @@ declare module 'vue' {
     PlantLibrary: typeof import('./components/PlantLibrary.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Sidebar: typeof import('./components/Sidebar.vue')['default']
+    Topbar: typeof import('./components/Topbar.vue')['default']
     WelcomeChatInterface: typeof import('./components/WelcomeChatInterface.vue')['default']
   }
 }

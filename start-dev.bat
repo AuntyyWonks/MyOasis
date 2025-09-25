@@ -5,14 +5,44 @@ echo    Professional Development Environment
 echo ========================================
 echo.
 
-echo [1/2] Starting Backend Server...
-start cmd /k "cd oasis-serverside && echo Starting Flask Backend... && python app.py"
+:: -----------------------------
+:: Step 1: Prepare Backend
+:: -----------------------------
+echo [1/3] Setting up Backend Virtual Environment...
 
-echo [2/2] Waiting for backend to initialize...
+cd oasis-serverside
+
+:: Create venv if it doesn't exist
+if not exist venv (
+    echo Creating virtual environment...
+    python -m venv venv
+)
+
+:: Activate venv
+call venv\Scripts\activate
+
+:: Upgrade pip and install requirements
+echo Installing backend dependencies...
+python -m pip install --upgrade pip
+pip install flask flask-cors google-genai python-dotenv
+
+:: Start Flask backend in a new terminal
+echo Starting Flask Backend...
+start cmd /k "call venv\Scripts\activate && python app.py"
+
+cd ..
+
+:: -----------------------------
+:: Step 2: Start Frontend
+:: -----------------------------
+echo [2/3] Waiting for backend to initialize...
 timeout /t 5 /nobreak > nul
 
-echo [2/2] Starting Frontend Development Server...
-start cmd /k "cd client && echo Starting Vue Frontend... && npm run dev"
+echo [3/3] Starting Frontend Development Server...
+cd client
+start cmd /k "npm run dev"
+
+cd ..
 
 echo.
 echo ========================================
