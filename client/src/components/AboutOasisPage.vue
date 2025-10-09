@@ -8,7 +8,7 @@
             <v-icon color="white" size="80">mdi-leaf</v-icon>
           </v-avatar>
           <h1 class="text-h2 font-weight-bold text-olive-green mb-4">
-            About LogoOasis
+            About My Oasis
           </h1>
           <p class="text-h5 text-grey-darken-1 mx-auto" style="max-width: 800px;">
             Your AI-powered companion for all things gardening. From plant care advice 
@@ -97,7 +97,7 @@
               <p class="text-body-1 mb-4">
                 Upload photos of your plants for instant health diagnosis. Dr. Oasis 
                 can identify diseases, pests, and nutrient deficiencies, providing 
-                treatment recommendations.
+                cost efficient treatment recommendations.
               </p>
               <v-chip color="olive-green" variant="tonal">Plant Diagnosis</v-chip>
               <v-chip color="olive-green" variant="tonal" class="ml-2">Image Analysis</v-chip>
@@ -153,7 +153,7 @@
                 Powered by Advanced AI
               </h2>
               <p class="text-h6 text-blue-lighten-4 mb-6">
-                LogoOasis uses cutting-edge artificial intelligence to provide accurate, 
+                My Oasis uses cutting-edge artificial intelligence to provide accurate, 
                 personalized gardening advice and plant health analysis.
               </p>
               <v-row>

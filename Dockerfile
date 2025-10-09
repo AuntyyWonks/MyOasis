@@ -10,7 +10,7 @@ ENV FLASK_ENV=production
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies (needed for some Python packages)
+# Install system dependencies 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential gcc libffi-dev curl \
     && rm -rf /var/lib/apt/lists/*

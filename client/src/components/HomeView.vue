@@ -15,7 +15,7 @@
             </v-avatar>
             
             <h1 class="text-h2 font-weight-bold text-white mb-4">
-              Welcome to Oasis
+              Welcome to My Oasis
             </h1>
             
             <p class="text-h6 text-green-lighten-4 mb-6 mx-auto" style="max-width: 600px;">
