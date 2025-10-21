@@ -14,7 +14,13 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   
-  
-  --hero-bg: image-url('/assets/hero-bg.jpg');
+  --hero-bg: url('/hero-bg.png');
 }
 
+
+.hero {
+  background-image: var(--hero-bg);
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+}
