@@ -17,6 +17,10 @@
   --hero-bg: url('/hero-bg.png');
 }
 
+html {
+  font-size: 16px;
+}
+
 
 .hero {
   background-image: var(--hero-bg);
