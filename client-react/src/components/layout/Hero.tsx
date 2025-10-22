@@ -1,5 +1,6 @@
 import React from 'react'
 import Header from './Header'
+import PromptBar from '../PromptBar'
 
 function Hero() {
   return (
@@ -15,7 +16,7 @@ function Hero() {
       </video>
 
       /* Overlay and content */
-      <div className="w-full h-full bg-black/30 flex flex-col items-center py-14 relative z-10">
+      <div className="w-full h-full bg-black/30 flex flex-col items-center py-14 absolute top-0 z-10">
         <div className="relative h-4/5 z-20 flex flex-col items-center justify-between">
           <Header />
           <div className="w-full flex flex-col gap-12 text-center">
@@ -23,6 +24,7 @@ function Hero() {
               <h1 className="text-6xl font-bold">Oasis</h1>
               <p className="text-lg px-12">Your AI farming assistant to help you plant, grow, and care for crops with confidence</p>
             </div>
+            <PromptBar />
           </div>
         </div>
       </div>
