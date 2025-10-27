@@ -24,7 +24,7 @@ call venv\Scripts\activate
 :: Upgrade pip and install requirements
 echo Installing backend dependencies...
 python -m pip install --upgrade pip
-pip install flask flask-cors google-genai python-dotenv
+pip install -r requirements.txt
 
 :: Start Flask backend in a new terminal
 echo Starting Flask Backend...

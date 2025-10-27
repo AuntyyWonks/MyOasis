@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 
-const Signup = ({ setShowSignup }) => {
+const apiUrl = import.meta.env.VITE_API_URL;
+
+const Signup = ({ setToken, setShowSignup }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    const response = await fetch('http://localhost:5000/api/register', {
+    const regResponse = await fetch(`${apiUrl}/api/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -14,11 +16,24 @@ const Signup = ({ setShowSignup }) => {
       body: JSON.stringify({ username, password }),
     });
 
-    if (response.ok) {
-      alert('Signup successful! Please log in.');
-      setShowSignup(false);
+    if (regResponse.ok) {
+      const loginResponse = await fetch(`${apiUrl}/api/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (loginResponse.ok) {
+        const data = await loginResponse.json();
+        setToken(data.token);
+        setShowSignup(false);
+      } else {
+        alert('Login failed after signup. Please try logging in manually.');
+      }
     } else {
-      const data = await response.json();
+      const data = await regResponse.json();
       alert(data.message);
     }
   };

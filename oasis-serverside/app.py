@@ -10,12 +10,22 @@ import logging
 import os
 import pathlib
 from functools import wraps
+import sqlite3
+from werkzeug.security import generate_password_hash, check_password_hash
 
-# Simple in-memory user store (for demonstration purposes)
-# In a real application, use a proper database
-USERS = {
-    "admin": "password"
-}
+# Database setup
+def init_db():
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL
+        )
+    ''')
+    conn.commit()
+    conn.close()
 
 # Simple token store (in a real app, use a more secure method like JWT)
 SESSIONS = {}
@@ -113,7 +123,13 @@ def create_app() -> Flask:
         username = data.get("username")
         password = data.get("password")
 
-        if username in USERS and USERS[username] == password:
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT password FROM users WHERE username = ?", (username,))
+        user = cursor.fetchone()
+        conn.close()
+
+        if user and check_password_hash(user[0], password):
             # Simple token generation (in a real app, use a more secure method like JWT)
             token = f"token_for_{username}"
             SESSIONS[token] = username
@@ -130,10 +146,18 @@ def create_app() -> Flask:
         if not username or not password:
             return jsonify({"message": "Username and password are required"}), 400
 
-        if username in USERS:
-            return jsonify({"message": "Username already exists"}), 400
+        hashed_password = generate_password_hash(password)
 
-        USERS[username] = password
+        try:
+            conn = sqlite3.connect('users.db')
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
+            conn.commit()
+        except sqlite3.IntegrityError:
+            return jsonify({"message": "Username already exists"}), 400
+        finally:
+            conn.close()
+
         return jsonify({"message": "User registered successfully"}), 201
 
     @api_bp.route("/chat", methods=["POST"])
@@ -240,6 +264,7 @@ def create_app() -> Flask:
 
 
 app = create_app()
+init_db()
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", "5000"))
