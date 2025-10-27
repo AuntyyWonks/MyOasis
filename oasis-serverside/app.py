@@ -9,6 +9,26 @@ import tempfile
 import logging
 import os
 import pathlib
+from functools import wraps
+
+# Simple in-memory user store (for demonstration purposes)
+# In a real application, use a proper database
+USERS = {
+    "admin": "password"
+}
+
+# Simple token store (in a real app, use a more secure method like JWT)
+SESSIONS = {}
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        token = request.headers.get('Authorization')
+        if not token or token not in SESSIONS:
+            return jsonify({"message": "Unauthorized"}), 401
+        return f(*args, **kwargs)
+    return decorated_function
+
 
 
 # Configuration
@@ -87,8 +107,38 @@ def create_app() -> Flask:
     # API Blueprint
     api_bp = Blueprint("api", __name__, url_prefix="/api")
 
+    @api_bp.route("/login", methods=["POST"])
+    def login():
+        data = request.get_json(silent=True) or {}
+        username = data.get("username")
+        password = data.get("password")
+
+        if username in USERS and USERS[username] == password:
+            # Simple token generation (in a real app, use a more secure method like JWT)
+            token = f"token_for_{username}"
+            SESSIONS[token] = username
+            return jsonify({"token": token})
+        
+        return jsonify({"message": "Invalid credentials"}), 401
+
+    @api_bp.route("/register", methods=["POST"])
+    def register():
+        data = request.get_json(silent=True) or {}
+        username = data.get("username")
+        password = data.get("password")
+
+        if not username or not password:
+            return jsonify({"message": "Username and password are required"}), 400
+
+        if username in USERS:
+            return jsonify({"message": "Username already exists"}), 400
+
+        USERS[username] = password
+        return jsonify({"message": "User registered successfully"}), 201
+
     @api_bp.route("/chat", methods=["POST"])
     @limiter.limit(CHAT_RATE_LIMIT)
+    @login_required
     def chat():
         data = request.get_json(silent=True) or {}
         user_message = (data.get("message") or "").strip()
@@ -111,6 +161,7 @@ def create_app() -> Flask:
 
     @api_bp.route("/crop-plan", methods=["POST"])
     @limiter.limit(CROP_RATE_LIMIT)
+    @login_required
     def crop_plan():
         data = request.get_json(silent=True) or {}
         user_info = (data.get("user_info") or "").strip()
@@ -131,6 +182,7 @@ def create_app() -> Flask:
 
     @api_bp.route("/plant-health", methods=["POST"])
     @limiter.limit(PLANT_HEALTH_RATE_LIMIT)
+    @login_required
     def plant_health():
         if "file" not in request.files:
             return jsonify({"error": "No file uploaded"}), 400
