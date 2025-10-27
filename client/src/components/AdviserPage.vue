@@ -1,33 +1,33 @@
 <template>
   <div class="adviser-page">
     <!-- Chat Messages Area -->
-    <div class="chat-messages" ref="messagesContainer">
+    <div ref="messagesContainer" class="chat-messages">
       <!-- Welcome Message -->
       <div v-if="messages.length === 0" class="welcome-section">
         <div class="text-center py-12">
-          <v-avatar size="120" color="azure-blue" class="mb-6">
+          <v-avatar class="mb-6" color="azure-blue" size="120">
             <v-icon color="white" size="60">mdi-chat</v-icon>
           </v-avatar>
           <h2 class="text-h3 font-weight-bold text-azure-blue mb-4">
             Adviser - Crop Planning Expert 🌾
           </h2>
           <p class="text-h6 text-grey-darken-1 mb-6 mx-auto" style="max-width: 600px;">
-            I'm your crop planning adviser. Tell me about your location, garden size, 
+            I'm your crop planning adviser. Tell me about your location, garden size,
             and preferences to get personalized crop recommendations.
           </p>
-          
+
           <!-- Quick Start Suggestions -->
           <div class="quick-suggestions">
             <h3 class="text-h6 font-weight-bold text-olive-green mb-4">
               Try asking me about:
             </h3>
-            <v-row justify="center" class="mb-6">
+            <v-row class="mb-6" justify="center">
               <v-col cols="auto">
                 <v-chip
-                  color="azure-blue"
-                  variant="outlined"
-                  size="large"
                   class="ma-2 suggestion-chip"
+                  color="azure-blue"
+                  size="large"
+                  variant="outlined"
                   @click="sendQuickMessage('I live in California and have a medium backyard. What vegetables should I plant this spring?')"
                 >
                   <v-icon start>mdi-map-marker</v-icon>
@@ -36,10 +36,10 @@
               </v-col>
               <v-col cols="auto">
                 <v-chip
-                  color="olive-green"
-                  variant="outlined"
-                  size="large"
                   class="ma-2 suggestion-chip"
+                  color="olive-green"
+                  size="large"
+                  variant="outlined"
                   @click="sendQuickMessage('I am a beginner gardener with a small balcony garden. What easy plants should I start with?')"
                 >
                   <v-icon start>mdi-sprout</v-icon>
@@ -48,10 +48,10 @@
               </v-col>
               <v-col cols="auto">
                 <v-chip
-                  color="azure-blue"
-                  variant="outlined"
-                  size="large"
                   class="ma-2 suggestion-chip"
+                  color="azure-blue"
+                  size="large"
+                  variant="outlined"
                   @click="sendQuickMessage('I want to grow herbs and vegetables for cooking. I have good sunlight and live in a temperate climate.')"
                 >
                   <v-icon start>mdi-chef-hat</v-icon>
@@ -74,18 +74,18 @@
           <div v-if="message.type === 'user'" class="user-message-container">
             <div class="d-flex justify-end">
               <v-card
-                color="azure-blue"
                 class="user-message pa-4"
+                color="azure-blue"
+                elevation="3"
                 max-width="70%"
                 rounded="xl"
-                elevation="3"
               >
                 <div class="text-white text-body-1">{{ message.content }}</div>
                 <div class="text-blue-lighten-4 text-caption mt-2">
                   {{ formatTime(message.timestamp) }}
                 </div>
               </v-card>
-              <v-avatar size="40" color="azure-blue" class="ml-3 mt-1">
+              <v-avatar class="ml-3 mt-1" color="azure-blue" size="40">
                 <v-icon color="white" size="20">mdi-account</v-icon>
               </v-avatar>
             </div>
@@ -94,17 +94,17 @@
           <!-- Bot Message -->
           <div v-else class="bot-message-container">
             <div class="d-flex justify-start">
-              <v-avatar size="40" color="olive-green" class="mr-3 mt-1">
+              <v-avatar class="mr-3 mt-1" color="olive-green" size="40">
                 <v-icon color="white" size="20">mdi-chat</v-icon>
               </v-avatar>
               <v-card
-                color="grey-lighten-4"
                 class="bot-message pa-4"
+                color="grey-lighten-4"
+                elevation="2"
                 max-width="70%"
                 rounded="xl"
-                elevation="2"
               >
-                <div class="text-grey-darken-3 text-body-1" v-html="formatAndSanitizeMarkdown(message.content)"></div>
+                <div class="text-grey-darken-3 text-body-1" v-html="formatAndSanitizeMarkdown(message.content)" />
                 <div class="text-grey text-caption mt-2">
                   {{ formatTime(message.timestamp) }}
                 </div>
@@ -116,19 +116,19 @@
         <!-- Typing Indicator -->
         <div v-if="isTyping" class="typing-container mb-6">
           <div class="d-flex justify-start">
-            <v-avatar size="40" color="olive-green" class="mr-3 mt-1">
+            <v-avatar class="mr-3 mt-1" color="olive-green" size="40">
               <v-icon color="white" size="20">mdi-chat</v-icon>
             </v-avatar>
             <v-card
-              color="grey-lighten-4"
               class="pa-4"
-              rounded="xl"
+              color="grey-lighten-4"
               elevation="2"
+              rounded="xl"
             >
               <div class="typing-indicator">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span />
+                <span />
+                <span />
               </div>
             </v-card>
           </div>
@@ -140,38 +140,38 @@
     <div class="chat-input-area">
       <v-container class="pa-4">
         <v-card
-          color="white"
-          rounded="xl"
-          elevation="4"
           class="input-card"
+          color="white"
+          elevation="4"
+          rounded="xl"
         >
           <v-card-text class="pa-3">
-            <v-row no-gutters align="center">
+            <v-row align="center" no-gutters>
               <!-- Text Input (75%) -->
-              <v-col cols="9" class="pr-2">
+              <v-col class="pr-2" cols="9">
                 <v-text-field
                   v-model="newMessage"
+                  class="chat-input"
+                  :disabled="isTyping"
+                  hide-details
                   placeholder="Tell me about your location, garden size, and what you'd like to grow..."
                   variant="plain"
-                  hide-details
-                  class="chat-input"
                   @keyup.enter="sendMessage"
-                  :disabled="isTyping"
                 >
                   <template #prepend-inner>
-                    <v-icon color="azure-blue" class="mr-2">mdi-chat</v-icon>
+                    <v-icon class="mr-2" color="azure-blue">mdi-chat</v-icon>
                   </template>
                 </v-text-field>
               </v-col>
-              
+
               <!-- Send Button (25%) -->
-              <v-col cols="3" class="d-flex justify-end">
+              <v-col class="d-flex justify-end" cols="3">
                 <v-btn
-                  color="azure-blue"
-                  size="large"
-                  rounded="xl"
                   class="send-button"
+                  color="azure-blue"
                   :disabled="!newMessage.trim() || isTyping"
+                  rounded="xl"
+                  size="large"
                   @click="sendMessage"
                 >
                   <v-icon class="mr-2">mdi-send</v-icon>
@@ -187,89 +187,89 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick } from 'vue'
-import { formatAndSanitizeMarkdown } from '@/utils/markdown'
-import { apiUrl } from '@/utils/api'
+  import { nextTick, ref } from 'vue'
+  import { apiUrl } from '@/utils/api'
+  import { formatAndSanitizeMarkdown } from '@/utils/markdown'
 
-interface Message {
-  type: 'user' | 'bot'
-  content: string
-  timestamp: Date
-}
-
-// Reactive data
-const messages = ref<Message[]>([])
-const newMessage = ref('')
-const isTyping = ref(false)
-const messagesContainer = ref<HTMLElement>()
-
-// Methods
-const sendMessage = async () => {
-  if (!newMessage.value.trim()) return
-
-  const userMessage: Message = {
-    type: 'user',
-    content: newMessage.value,
-    timestamp: new Date()
+  interface Message {
+    type: 'user' | 'bot'
+    content: string
+    timestamp: Date
   }
 
-  messages.value.push(userMessage)
-  const messageToSend = newMessage.value
-  newMessage.value = ''
-  
-  await scrollToBottom()
-  
-  // Show typing indicator
-  isTyping.value = true
-  
-  try {
-    const response = await fetch(apiUrl('crop-plan'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user_info: messageToSend
-      })
-    })
+  // Reactive data
+  const messages = ref<Message[]>([])
+  const newMessage = ref('')
+  const isTyping = ref(false)
+  const messagesContainer = ref<HTMLElement>()
 
-    const data = await response.json()
-    
-    const botMessage: Message = {
-      type: 'bot',
-      content: data.recommendations_text || 'Sorry, I encountered an error. Please try again with more details about your location and garden.',
-      timestamp: new Date()
+  // Methods
+  async function sendMessage () {
+    if (!newMessage.value.trim()) return
+
+    const userMessage: Message = {
+      type: 'user',
+      content: newMessage.value,
+      timestamp: new Date(),
     }
 
-    messages.value.push(botMessage)
-  } catch (error) {
-    const errorMessage: Message = {
-      type: 'bot',
-      content: 'Sorry, I\'m having trouble connecting to the server. Please check if the backend is running and try again.',
-      timestamp: new Date()
-    }
-    messages.value.push(errorMessage)
-  } finally {
-    isTyping.value = false
+    messages.value.push(userMessage)
+    const messageToSend = newMessage.value
+    newMessage.value = ''
+
     await scrollToBottom()
+
+    // Show typing indicator
+    isTyping.value = true
+
+    try {
+      const response = await fetch(apiUrl('crop-plan'), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_info: messageToSend,
+        }),
+      })
+
+      const data = await response.json()
+
+      const botMessage: Message = {
+        type: 'bot',
+        content: data.recommendations_text || 'Sorry, I encountered an error. Please try again with more details about your location and garden.',
+        timestamp: new Date(),
+      }
+
+      messages.value.push(botMessage)
+    } catch {
+      const errorMessage: Message = {
+        type: 'bot',
+        content: 'Sorry, I\'m having trouble connecting to the server. Please check if the backend is running and try again.',
+        timestamp: new Date(),
+      }
+      messages.value.push(errorMessage)
+    } finally {
+      isTyping.value = false
+      await scrollToBottom()
+    }
   }
-}
 
-const sendQuickMessage = (message: string) => {
-  newMessage.value = message
-  sendMessage()
-}
-
-const scrollToBottom = async () => {
-  await nextTick()
-  if (messagesContainer.value) {
-    messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight
+  function sendQuickMessage (message: string) {
+    newMessage.value = message
+    sendMessage()
   }
-}
 
-const formatTime = (date: Date) => {
-  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-}
+  async function scrollToBottom () {
+    await nextTick()
+    if (messagesContainer.value) {
+      messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight
+    }
+  }
+
+  function formatTime (date: Date) {
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  }
 </script>
 
 <style scoped>

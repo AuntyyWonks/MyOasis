@@ -4,7 +4,7 @@
       <v-img
         class="mb-4"
         height="150"
-        src="@/assets/logoOasis.png"
+        src="@/assets/LogoOasis.png"
       />
 
       <div class="mb-8 text-center">

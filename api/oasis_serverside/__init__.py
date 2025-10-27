@@ -1,0 +1,1 @@
+# Namespace package for Vercel function imports

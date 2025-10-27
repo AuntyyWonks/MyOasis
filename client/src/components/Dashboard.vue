@@ -8,7 +8,7 @@
 
     <!-- Main Content -->
     <v-main>
-      <v-container fluid class="pa-0">
+      <v-container class="pa-0" fluid>
         <!-- Chat Interface -->
         <div v-if="currentView === 'chat'">
           <ChatInterface />
@@ -44,33 +44,33 @@
     <!-- Floating Action Button for Quick Chat -->
     <v-fab
       v-if="currentView !== 'chat'"
-      icon="mdi-chat"
-      color="green-darken-1"
-      size="large"
-      location="bottom end"
       app
+      color="green-darken-1"
+      icon="mdi-chat"
+      location="bottom end"
+      size="large"
       @click="handleNavigation('chat')"
     />
   </v-app>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import NavigationDrawer from './NavigationDrawer.vue'
-import ChatInterface from './ChatInterface.vue'
-import CropPlanner from './CropPlanner.vue'
-import PlantHealthAnalyzer from './PlantHealthAnalyzer.vue'
-import GardenJournal from './GardenJournal.vue'
-import PlantLibrary from './PlantLibrary.vue'
-import HomeView from './HomeView.vue'
+  import { ref } from 'vue'
+  import ChatInterface from './ChatInterface.vue'
+  import CropPlanner from './CropPlanner.vue'
+  import GardenJournal from './GardenJournal.vue'
+  import HomeView from './HomeView.vue'
+  import NavigationDrawer from './NavigationDrawer.vue'
+  import PlantHealthAnalyzer from './PlantHealthAnalyzer.vue'
+  import PlantLibrary from './PlantLibrary.vue'
 
-// Reactive data
-const currentView = ref('home')
+  // Reactive data
+  const currentView = ref('home')
 
-// Methods
-const handleNavigation = (view: string) => {
-  currentView.value = view
-}
+  // Methods
+  function handleNavigation (view: string) {
+    currentView.value = view
+  }
 </script>
 
 <style scoped>

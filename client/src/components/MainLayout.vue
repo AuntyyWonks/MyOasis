@@ -2,16 +2,16 @@
   <v-app>
     <!-- Static Sidebar -->
     <v-navigation-drawer
-      permanent
-      width="280"
+      class="sidebar"
       color="grey-lighten-5"
       elevation="3"
-      class="sidebar"
+      permanent
+      width="280"
     >
       <!-- Logo Section -->
       <div class="logo-section pa-6 text-center">
-        <v-avatar size="200" color="olive-green" class="mb-3">
-          <img src="@/assets/logoOasis.png" alt="Logo" />
+        <v-avatar class="mb-3" color="olive-green" size="200">
+          <img alt="Logo" src="@/assets/LogoOasis.png">
         </v-avatar>
         <h2 class="text-h5 font-weight-bold text-olive-green">My Oasis</h2>
         <p class="text-body-2 text-grey-darken-1">Plant Assistant</p>
@@ -20,15 +20,15 @@
       <v-divider class="mx-4 mb-4" />
 
       <!-- Navigation Buttons -->
-      <v-list nav class="px-4">
+      <v-list class="px-4" nav>
         <v-list-item
           v-for="item in navigationItems"
           :key="item.id"
-          :value="item.id"
           :active="currentPage === item.id"
-          color="azure-blue"
           class="nav-item mb-2"
+          color="azure-blue"
           rounded="lg"
+          :value="item.id"
           @click="navigateTo(item.id)"
         >
           <template #prepend>
@@ -57,10 +57,10 @@
     <v-main class="main-content">
       <!-- Header -->
       <v-app-bar
+        class="header-bar"
         color="white"
         elevation="2"
         height="70"
-        class="header-bar"
       >
         <v-app-bar-title class="text-center">
           <h1 class="text-h4 font-weight-bold text-azure-blue">
@@ -73,13 +73,13 @@
           <v-menu offset-y>
             <template #activator="{ props }">
               <v-btn
-                icon
-                size="large"
-                color="azure-blue"
                 v-bind="props"
                 class="mr-4"
+                color="azure-blue"
+                icon
+                size="large"
               >
-                <v-avatar size="40" color="azure-blue">
+                <v-avatar color="azure-blue" size="40">
                   <v-icon color="white">mdi-account</v-icon>
                 </v-avatar>
               </v-btn>
@@ -104,7 +104,7 @@
       </v-app-bar>
 
       <!-- Page Content -->
-      <v-container fluid class="page-container pa-0">
+      <v-container class="page-container pa-0" fluid>
         <!-- Welcome Page with Chat Interface -->
         <div v-if="currentPage === 'welcome'" class="welcome-page">
           <WelcomeChatInterface />
@@ -127,8 +127,8 @@
 
         <!-- Other Pages (Placeholder for now) -->
         <div v-else class="other-page pa-6">
-          <v-card rounded="lg" elevation="2" class="pa-8 text-center">
-            <v-icon size="64" color="olive-green" class="mb-4">
+          <v-card class="pa-8 text-center" elevation="2" rounded="lg">
+            <v-icon class="mb-4" color="olive-green" size="64">
               {{ getCurrentPageIcon() }}
             </v-icon>
             <h2 class="text-h4 font-weight-bold text-olive-green mb-4">
@@ -144,8 +144,8 @@
 
     <!-- Footer -->
     <v-footer
-      color="grey-darken-3"
       class="footer pa-2"
+      color="grey-darken-3"
       height="60"
     >
       <v-container class="pa-2">
@@ -157,30 +157,30 @@
               <span class="text-caption">Contact: support@oasis-plants.com</span>
             </div>
           </v-col>
-          <v-col cols="12" md="4" class="text-md-right">
+          <v-col class="text-md-right" cols="12" md="4">
             <div class="d-flex justify-md-end justify-start align-center">
               <v-btn
+                class="mr-1"
+                color="white"
                 icon
                 size="x-small"
-                color="white"
                 variant="text"
-                class="mr-1"
               >
                 <v-icon size="16">mdi-facebook</v-icon>
               </v-btn>
               <v-btn
+                class="mr-1"
+                color="white"
                 icon
                 size="x-small"
-                color="white"
                 variant="text"
-                class="mr-1"
               >
                 <v-icon size="16">mdi-twitter</v-icon>
               </v-btn>
               <v-btn
+                color="white"
                 icon
                 size="x-small"
-                color="white"
                 variant="text"
               >
                 <v-icon size="16">mdi-instagram</v-icon>
@@ -203,26 +203,26 @@
             <v-col cols="12">
               <v-switch
                 v-model="settings.notifications"
-                label="Enable Notifications"
                 color="azure-blue"
                 hide-details
+                label="Enable Notifications"
               />
             </v-col>
             <v-col cols="12">
               <v-switch
                 v-model="settings.darkMode"
-                label="Dark Mode"
                 color="azure-blue"
                 hide-details
+                label="Dark Mode"
               />
             </v-col>
             <v-col cols="12">
               <v-select
                 v-model="settings.language"
-                label="Language"
-                :items="languages"
-                variant="outlined"
                 color="azure-blue"
+                :items="languages"
+                label="Language"
+                variant="outlined"
               />
             </v-col>
           </v-row>
@@ -279,116 +279,119 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
-import WelcomeChatInterface from './WelcomeChatInterface.vue'
-import AdviserPage from './AdviserPage.vue'
-import DrOasisPage from './DrOasisPage.vue'
-import AboutOasisPage from './AboutOasisPage.vue'
+  import { computed, reactive, ref } from 'vue'
+  import AboutOasisPage from './AboutOasisPage.vue'
+  import AdviserPage from './AdviserPage.vue'
+  import DrOasisPage from './DrOasisPage.vue'
+  import WelcomeChatInterface from './WelcomeChatInterface.vue'
 
-// Reactive data
-const currentPage = ref('welcome')
-const settingsDialog = ref(false)
-const helpDialog = ref(false)
+  // Reactive data
+  const currentPage = ref('welcome')
+  const settingsDialog = ref(false)
+  const helpDialog = ref(false)
 
-const settings = reactive({
-  notifications: true,
-  darkMode: false,
-  language: 'English'
-})
+  const settings = reactive({
+    notifications: true,
+    darkMode: false,
+    language: 'English',
+  })
 
-// Navigation items
-const navigationItems = [
-  {
-    id: 'welcome',
-    title: 'Welcome',
-    icon: 'mdi-home'
-  },
-  {
-    id: 'adviser',
-    title: 'Adviser',
-    icon: 'mdi-chat'
-  },
-  {
-    id: 'dr-oasis',
-    title: 'Dr. Oasis',
-    icon: 'mdi-medical-bag'
-  },
-  {
-    id: 'about',
-    title: 'About Oasis',
-    icon: 'mdi-information'
-  },
-  {
-    id: 'journal',
-    title: 'Garden Journal',
-    icon: 'mdi-book-open-variant'
+  // Navigation items
+  const navigationItems = [
+    {
+      id: 'welcome',
+      title: 'Welcome',
+      icon: 'mdi-home',
+    },
+    {
+      id: 'adviser',
+      title: 'Adviser',
+      icon: 'mdi-chat',
+    },
+    {
+      id: 'dr-oasis',
+      title: 'Dr. Oasis',
+      icon: 'mdi-medical-bag',
+    },
+    {
+      id: 'about',
+      title: 'About Oasis',
+      icon: 'mdi-information',
+    },
+    {
+      id: 'journal',
+      title: 'Garden Journal',
+      icon: 'mdi-book-open-variant',
+    },
+  ]
+
+  // Profile menu items
+  const profileMenuItems = [
+    {
+      title: 'Settings',
+      icon: 'mdi-cog',
+      action: 'settings',
+    },
+    {
+      title: 'Help',
+      icon: 'mdi-help-circle',
+      action: 'help',
+    },
+    {
+      title: 'Sign Out',
+      icon: 'mdi-logout',
+      action: 'signout',
+      color: 'red',
+    },
+  ]
+
+  const languages = ['English', 'Spanish', 'French', 'German']
+
+  // Computed properties
+  const currentPageTitle = computed(() => {
+    const pageMap: Record<string, string> = {
+      'welcome': 'MY OASIS',
+      'adviser': 'ADVISER',
+      'dr-oasis': 'DR. OASIS',
+      'about': 'ABOUT OASIS',
+      'journal': 'GARDEN JOURNAL',
+    }
+    return pageMap[currentPage.value] || 'OASIS'
+  })
+
+  // Methods
+  function navigateTo (pageId: string) {
+    currentPage.value = pageId
   }
-]
 
-// Profile menu items
-const profileMenuItems = [
-  {
-    title: 'Settings',
-    icon: 'mdi-cog',
-    action: 'settings'
-  },
-  {
-    title: 'Help',
-    icon: 'mdi-help-circle',
-    action: 'help'
-  },
-  {
-    title: 'Sign Out',
-    icon: 'mdi-logout',
-    action: 'signout',
-    color: 'red'
+  function handleProfileAction (action: string) {
+    switch (action) {
+      case 'settings': {
+        settingsDialog.value = true
+        break
+      }
+      case 'help': {
+        helpDialog.value = true
+        break
+      }
+      case 'signout': {
+        // Handle sign out logic
+        console.log('Sign out clicked')
+        break
+      }
+    }
   }
-]
 
-const languages = ['English', 'Spanish', 'French', 'German']
-
-// Computed properties
-const currentPageTitle = computed(() => {
-  const pageMap: Record<string, string> = {
-    welcome: 'MY OASIS',
-    adviser: 'ADVISER',
-    'dr-oasis': 'DR. OASIS',
-    about: 'ABOUT OASIS',
-    journal: 'GARDEN JOURNAL'
+  function saveSettings () {
+    // Save settings logic
+    localStorage.setItem('oasis-settings', JSON.stringify(settings))
+    settingsDialog.value = false
   }
-  return pageMap[currentPage.value] || 'OASIS'
-})
 
-// Methods
-const navigateTo = (pageId: string) => {
-  currentPage.value = pageId
-}
-
-const handleProfileAction = (action: string) => {
-  switch (action) {
-    case 'settings':
-      settingsDialog.value = true
-      break
-    case 'help':
-      helpDialog.value = true
-      break
-    case 'signout':
-      // Handle sign out logic
-      console.log('Sign out clicked')
-      break
+  function getCurrentPageIcon () {
+    const item = navigationItems.find(item => item.id === currentPage.value)
+    return item?.icon || 'mdi-home'
   }
-}
-
-const saveSettings = () => {
-  // Save settings logic
-  localStorage.setItem('oasis-settings', JSON.stringify(settings))
-  settingsDialog.value = false
-}
-
-const getCurrentPageIcon = () => {
-  const item = navigationItems.find(item => item.id === currentPage.value)
-  return item?.icon || 'mdi-home'
-}
 </script>
 
 <style scoped>

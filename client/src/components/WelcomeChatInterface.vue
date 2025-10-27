@@ -1,33 +1,33 @@
 <template>
   <div class="chat-interface">
     <!-- Chat Messages Area -->
-    <div class="chat-messages" ref="messagesContainer">
+    <div ref="messagesContainer" class="chat-messages">
       <!-- Welcome Message -->
       <div v-if="messages.length === 0" class="welcome-section">
         <div class="text-center py-12">
-          <v-avatar size="120" color="olive-green" class="mb-6">
+          <v-avatar class="mb-6" color="olive-green" size="120">
             <v-icon color="white" size="60">mdi-leaf</v-icon>
           </v-avatar>
           <h2 class="text-h3 font-weight-bold text-olive-green mb-4">
             Welcome to Oasis! 🌱
           </h2>
           <p class="text-h6 text-grey-darken-1 mb-6 mx-auto" style="max-width: 600px;">
-            I'm your AI-powered plant assistant. Ask me anything about plant care, 
+            I'm your AI-powered plant assistant. Ask me anything about plant care,
             gardening tips, or upload photos for plant health analysis.
           </p>
-          
+
           <!-- Quick Start Suggestions -->
           <div class="quick-suggestions">
             <h3 class="text-h6 font-weight-bold text-azure-blue mb-4">
               Try asking me about:
             </h3>
-            <v-row justify="center" class="mb-6">
+            <v-row class="mb-6" justify="center">
               <v-col cols="auto">
                 <v-chip
-                  color="azure-blue"
-                  variant="outlined"
-                  size="large"
                   class="ma-2 suggestion-chip"
+                  color="azure-blue"
+                  size="large"
+                  variant="outlined"
                   @click="sendQuickMessage('How do I care for indoor plants?')"
                 >
                   <v-icon start>mdi-home-variant</v-icon>
@@ -36,10 +36,10 @@
               </v-col>
               <v-col cols="auto">
                 <v-chip
-                  color="olive-green"
-                  variant="outlined"
-                  size="large"
                   class="ma-2 suggestion-chip"
+                  color="olive-green"
+                  size="large"
+                  variant="outlined"
                   @click="sendQuickMessage('What vegetables should I plant this season?')"
                 >
                   <v-icon start>mdi-carrot</v-icon>
@@ -48,10 +48,10 @@
               </v-col>
               <v-col cols="auto">
                 <v-chip
-                  color="azure-blue"
-                  variant="outlined"
-                  size="large"
                   class="ma-2 suggestion-chip"
+                  color="azure-blue"
+                  size="large"
+                  variant="outlined"
                   @click="sendQuickMessage('My plant leaves are turning yellow, what should I do?')"
                 >
                   <v-icon start>mdi-medical-bag</v-icon>
@@ -74,18 +74,18 @@
           <div v-if="message.type === 'user'" class="user-message-container">
             <div class="d-flex justify-end">
               <v-card
-                color="azure-blue"
                 class="user-message pa-4"
+                color="azure-blue"
+                elevation="3"
                 max-width="70%"
                 rounded="xl"
-                elevation="3"
               >
                 <div class="text-white text-body-1">{{ message.content }}</div>
                 <div class="text-blue-lighten-4 text-caption mt-2">
                   {{ formatTime(message.timestamp) }}
                 </div>
               </v-card>
-              <v-avatar size="40" color="azure-blue" class="ml-3 mt-1">
+              <v-avatar class="ml-3 mt-1" color="azure-blue" size="40">
                 <v-icon color="white" size="20">mdi-account</v-icon>
               </v-avatar>
             </div>
@@ -94,17 +94,17 @@
           <!-- Bot Message -->
           <div v-else class="bot-message-container">
             <div class="d-flex justify-start">
-              <v-avatar size="40" color="olive-green" class="mr-3 mt-1">
+              <v-avatar class="mr-3 mt-1" color="olive-green" size="40">
                 <v-icon color="white" size="20">mdi-leaf</v-icon>
               </v-avatar>
               <v-card
-                color="grey-lighten-4"
                 class="bot-message pa-4"
+                color="grey-lighten-4"
+                elevation="2"
                 max-width="70%"
                 rounded="xl"
-                elevation="2"
               >
-                <div class="text-grey-darken-3 text-body-1" v-html="formatAndSanitizeMarkdown(message.content)"></div>
+                <div class="text-grey-darken-3 text-body-1" v-html="formatAndSanitizeMarkdown(message.content)" />
                 <div class="text-grey text-caption mt-2">
                   {{ formatTime(message.timestamp) }}
                 </div>
@@ -116,19 +116,19 @@
         <!-- Typing Indicator -->
         <div v-if="isTyping" class="typing-container mb-6">
           <div class="d-flex justify-start">
-            <v-avatar size="40" color="olive-green" class="mr-3 mt-1">
+            <v-avatar class="mr-3 mt-1" color="olive-green" size="40">
               <v-icon color="white" size="20">mdi-leaf</v-icon>
             </v-avatar>
             <v-card
-              color="grey-lighten-4"
               class="pa-4"
-              rounded="xl"
+              color="grey-lighten-4"
               elevation="2"
+              rounded="xl"
             >
               <div class="typing-indicator">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span />
+                <span />
+                <span />
               </div>
             </v-card>
           </div>
@@ -140,38 +140,38 @@
     <div class="chat-input-area">
       <v-container class="pa-4">
         <v-card
-          color="white"
-          rounded="xl"
-          elevation="4"
           class="input-card"
+          color="white"
+          elevation="4"
+          rounded="xl"
         >
           <v-card-text class="pa-3">
-            <v-row no-gutters align="center">
+            <v-row align="center" no-gutters>
               <!-- Text Input (75%) -->
-              <v-col cols="9" class="pr-2">
+              <v-col class="pr-2" cols="9">
                 <v-text-field
                   v-model="newMessage"
+                  class="chat-input"
+                  :disabled="isTyping"
+                  hide-details
                   placeholder="Ask me about plants, gardening, or upload an image..."
                   variant="plain"
-                  hide-details
-                  class="chat-input"
                   @keyup.enter="sendMessage"
-                  :disabled="isTyping"
                 >
                   <template #prepend-inner>
-                    <v-icon color="olive-green" class="mr-2">mdi-message-text</v-icon>
+                    <v-icon class="mr-2" color="olive-green">mdi-message-text</v-icon>
                   </template>
                 </v-text-field>
               </v-col>
-              
+
               <!-- Send Button (25%) -->
-              <v-col cols="3" class="d-flex justify-end">
+              <v-col class="d-flex justify-end" cols="3">
                 <v-btn
-                  color="azure-blue"
-                  size="large"
-                  rounded="xl"
                   class="send-button"
+                  color="azure-blue"
                   :disabled="!newMessage.trim() || isTyping"
+                  rounded="xl"
+                  size="large"
                   @click="sendMessage"
                 >
                   <v-icon class="mr-2">mdi-send</v-icon>
@@ -187,90 +187,90 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick } from 'vue'
-import { formatAndSanitizeMarkdown } from '@/utils/markdown'
-import { apiUrl } from '@/utils/api'
+  import { nextTick, ref } from 'vue'
+  import { apiUrl } from '@/utils/api'
+  import { formatAndSanitizeMarkdown } from '@/utils/markdown'
 
-interface Message {
-  type: 'user' | 'bot'
-  content: string
-  timestamp: Date
-}
-
-// Reactive data
-const messages = ref<Message[]>([])
-const newMessage = ref('')
-const isTyping = ref(false)
-const messagesContainer = ref<HTMLElement>()
-
-// Methods
-const sendMessage = async () => {
-  if (!newMessage.value.trim()) return
-
-  const userMessage: Message = {
-    type: 'user',
-    content: newMessage.value,
-    timestamp: new Date()
+  interface Message {
+    type: 'user' | 'bot'
+    content: string
+    timestamp: Date
   }
 
-  messages.value.push(userMessage)
-  const messageToSend = newMessage.value
-  newMessage.value = ''
-  
-  await scrollToBottom()
-  
-  // Show typing indicator
-  isTyping.value = true
-  
-  try {
-    const response = await fetch(apiUrl('chat'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        message: messageToSend,
-        name: 'User'
-      })
-    })
+  // Reactive data
+  const messages = ref<Message[]>([])
+  const newMessage = ref('')
+  const isTyping = ref(false)
+  const messagesContainer = ref<HTMLElement>()
 
-    const data = await response.json()
-    
-    const botMessage: Message = {
-      type: 'bot',
-      content: data.reply || 'Sorry, I encountered an error. Please try again.',
-      timestamp: new Date()
+  // Methods
+  async function sendMessage () {
+    if (!newMessage.value.trim()) return
+
+    const userMessage: Message = {
+      type: 'user',
+      content: newMessage.value,
+      timestamp: new Date(),
     }
 
-    messages.value.push(botMessage)
-  } catch (error) {
-    const errorMessage: Message = {
-      type: 'bot',
-      content: 'Sorry, I\'m having trouble connecting to the server. Please check if the backend is running and try again.',
-      timestamp: new Date()
-    }
-    messages.value.push(errorMessage)
-  } finally {
-    isTyping.value = false
+    messages.value.push(userMessage)
+    const messageToSend = newMessage.value
+    newMessage.value = ''
+
     await scrollToBottom()
+
+    // Show typing indicator
+    isTyping.value = true
+
+    try {
+      const response = await fetch(apiUrl('chat'), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: messageToSend,
+          name: 'User',
+        }),
+      })
+
+      const data = await response.json()
+
+      const botMessage: Message = {
+        type: 'bot',
+        content: data.reply || 'Sorry, I encountered an error. Please try again.',
+        timestamp: new Date(),
+      }
+
+      messages.value.push(botMessage)
+    } catch {
+      const errorMessage: Message = {
+        type: 'bot',
+        content: 'Sorry, I\'m having trouble connecting to the server. Please check if the backend is running and try again.',
+        timestamp: new Date(),
+      }
+      messages.value.push(errorMessage)
+    } finally {
+      isTyping.value = false
+      await scrollToBottom()
+    }
   }
-}
 
-const sendQuickMessage = (message: string) => {
-  newMessage.value = message
-  sendMessage()
-}
-
-const scrollToBottom = async () => {
-  await nextTick()
-  if (messagesContainer.value) {
-    messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight
+  function sendQuickMessage (message: string) {
+    newMessage.value = message
+    sendMessage()
   }
-}
 
-const formatTime = (date: Date) => {
-  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-}
+  async function scrollToBottom () {
+    await nextTick()
+    if (messagesContainer.value) {
+      messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight
+    }
+  }
+
+  function formatTime (date: Date) {
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  }
 </script>
 
 <style scoped>

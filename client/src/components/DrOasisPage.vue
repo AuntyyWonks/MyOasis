@@ -1,44 +1,44 @@
 <template>
   <div class="dr-oasis-page">
     <!-- Chat Messages Area -->
-    <div class="chat-messages" ref="messagesContainer">
+    <div ref="messagesContainer" class="chat-messages">
       <!-- Welcome Message -->
       <div v-if="messages.length === 0" class="welcome-section">
         <div class="text-center py-12">
-          <v-avatar size="120" color="olive-green" class="mb-6">
+          <v-avatar class="mb-6" color="olive-green" size="120">
             <v-icon color="white" size="60">mdi-medical-bag</v-icon>
           </v-avatar>
           <h2 class="text-h3 font-weight-bold text-olive-green mb-4">
             Dr. Oasis - Plant Health Expert 🩺
           </h2>
           <p class="text-h6 text-grey-darken-1 mb-6 mx-auto" style="max-width: 600px;">
-            I'm Dr. Oasis, your plant health specialist. Upload photos of your plants 
+            I'm Dr. Oasis, your plant health specialist. Upload photos of your plants
             for instant diagnosis and treatment recommendations.
           </p>
-          
+
           <!-- Upload Instructions -->
           <div class="upload-instructions">
             <h3 class="text-h6 font-weight-bold text-azure-blue mb-4">
               How to get the best diagnosis:
             </h3>
-            <v-row justify="center" class="mb-6">
+            <v-row class="mb-6" justify="center">
               <v-col cols="auto">
-                <v-card color="azure-blue" variant="tonal" class="pa-4 ma-2" rounded="lg">
-                  <v-icon color="azure-blue" size="32" class="mb-2">mdi-camera</v-icon>
+                <v-card class="pa-4 ma-2" color="azure-blue" rounded="lg" variant="tonal">
+                  <v-icon class="mb-2" color="azure-blue" size="32">mdi-camera</v-icon>
                   <div class="text-body-2 font-weight-bold">Clear Photos</div>
                   <div class="text-caption">Take well-lit, focused images</div>
                 </v-card>
               </v-col>
               <v-col cols="auto">
-                <v-card color="olive-green" variant="tonal" class="pa-4 ma-2" rounded="lg">
-                  <v-icon color="olive-green" size="32" class="mb-2">mdi-leaf</v-icon>
+                <v-card class="pa-4 ma-2" color="olive-green" rounded="lg" variant="tonal">
+                  <v-icon class="mb-2" color="olive-green" size="32">mdi-leaf</v-icon>
                   <div class="text-body-2 font-weight-bold">Show Problems</div>
                   <div class="text-caption">Focus on affected areas</div>
                 </v-card>
               </v-col>
               <v-col cols="auto">
-                <v-card color="azure-blue" variant="tonal" class="pa-4 ma-2" rounded="lg">
-                  <v-icon color="azure-blue" size="32" class="mb-2">mdi-information</v-icon>
+                <v-card class="pa-4 ma-2" color="azure-blue" rounded="lg" variant="tonal">
+                  <v-icon class="mb-2" color="azure-blue" size="32">mdi-information</v-icon>
                   <div class="text-body-2 font-weight-bold">Add Context</div>
                   <div class="text-caption">Describe symptoms you notice</div>
                 </v-card>
@@ -59,18 +59,18 @@
           <div v-if="message.type === 'user'" class="user-message-container">
             <div class="d-flex justify-end">
               <v-card
-                color="azure-blue"
                 class="user-message pa-4"
+                color="azure-blue"
+                elevation="3"
                 max-width="70%"
                 rounded="xl"
-                elevation="3"
               >
                 <div v-if="message.image" class="mb-3">
                   <v-img
-                    :src="message.image"
+                    class="uploaded-image"
                     max-height="200"
                     rounded="lg"
-                    class="uploaded-image"
+                    :src="message.image"
                   />
                 </div>
                 <div class="text-white text-body-1">{{ message.content }}</div>
@@ -78,7 +78,7 @@
                   {{ formatTime(message.timestamp) }}
                 </div>
               </v-card>
-              <v-avatar size="40" color="azure-blue" class="ml-3 mt-1">
+              <v-avatar class="ml-3 mt-1" color="azure-blue" size="40">
                 <v-icon color="white" size="20">mdi-account</v-icon>
               </v-avatar>
             </div>
@@ -87,17 +87,17 @@
           <!-- Bot Message -->
           <div v-else class="bot-message-container">
             <div class="d-flex justify-start">
-              <v-avatar size="40" color="olive-green" class="mr-3 mt-1">
+              <v-avatar class="mr-3 mt-1" color="olive-green" size="40">
                 <v-icon color="white" size="20">mdi-medical-bag</v-icon>
               </v-avatar>
               <v-card
-                color="grey-lighten-4"
                 class="bot-message pa-4"
+                color="grey-lighten-4"
+                elevation="2"
                 max-width="70%"
                 rounded="xl"
-                elevation="2"
               >
-                <div class="text-grey-darken-3 text-body-1" v-html="formatAndSanitizeMarkdown(message.content)"></div>
+                <div class="text-grey-darken-3 text-body-1" v-html="formatAndSanitizeMarkdown(message.content)" />
                 <div class="text-grey text-caption mt-2">
                   {{ formatTime(message.timestamp) }}
                 </div>
@@ -109,19 +109,19 @@
         <!-- Typing Indicator -->
         <div v-if="isTyping" class="typing-container mb-6">
           <div class="d-flex justify-start">
-            <v-avatar size="40" color="olive-green" class="mr-3 mt-1">
+            <v-avatar class="mr-3 mt-1" color="olive-green" size="40">
               <v-icon color="white" size="20">mdi-medical-bag</v-icon>
             </v-avatar>
             <v-card
-              color="grey-lighten-4"
               class="pa-4"
-              rounded="xl"
+              color="grey-lighten-4"
               elevation="2"
+              rounded="xl"
             >
               <div class="typing-indicator">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span />
+                <span />
+                <span />
               </div>
             </v-card>
           </div>
@@ -133,52 +133,52 @@
     <div class="chat-input-area">
       <v-container class="pa-4">
         <v-card
-          color="white"
-          rounded="xl"
-          elevation="4"
           class="input-card"
+          color="white"
+          elevation="4"
+          rounded="xl"
         >
           <v-card-text class="pa-3">
-            <v-row no-gutters align="center">
+            <v-row align="center" no-gutters>
               <!-- Text Input (60%) -->
-              <v-col cols="7" class="pr-2">
+              <v-col class="pr-2" cols="7">
                 <v-text-field
                   v-model="newMessage"
+                  class="chat-input"
+                  :disabled="isTyping"
+                  hide-details
                   placeholder="Describe your plant's symptoms or upload a photo..."
                   variant="plain"
-                  hide-details
-                  class="chat-input"
                   @keyup.enter="sendMessage"
-                  :disabled="isTyping"
                 >
                   <template #prepend-inner>
-                    <v-icon color="olive-green" class="mr-2">mdi-medical-bag</v-icon>
+                    <v-icon class="mr-2" color="olive-green">mdi-medical-bag</v-icon>
                   </template>
                 </v-text-field>
               </v-col>
-              
+
               <!-- Upload Button (15%) -->
-              <v-col cols="2" class="px-1">
+              <v-col class="px-1" cols="2">
                 <v-btn
                   color="olive-green"
-                  variant="outlined"
-                  size="large"
-                  rounded="xl"
                   :disabled="isTyping"
+                  rounded="xl"
+                  size="large"
+                  variant="outlined"
                   @click="triggerImageUpload"
                 >
                   <v-icon>mdi-camera</v-icon>
                 </v-btn>
               </v-col>
-              
+
               <!-- Send Button (25%) -->
-              <v-col cols="3" class="d-flex justify-end">
+              <v-col class="d-flex justify-end" cols="3">
                 <v-btn
-                  color="olive-green"
-                  size="large"
-                  rounded="xl"
                   class="send-button"
+                  color="olive-green"
                   :disabled="(!newMessage.trim() && !selectedFile) || isTyping"
+                  rounded="xl"
+                  size="large"
                   @click="sendMessage"
                 >
                   <v-icon class="mr-2">mdi-send</v-icon>
@@ -194,133 +194,133 @@
     <!-- Hidden File Input -->
     <input
       ref="fileInput"
-      type="file"
       accept="image/*"
       style="display: none"
+      type="file"
       @change="handleImageUpload"
-    />
+    >
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick } from 'vue'
-import { formatAndSanitizeMarkdown } from '@/utils/markdown'
-import { apiUrl } from '@/utils/api'
+  import { nextTick, ref } from 'vue'
+  import { apiUrl } from '@/utils/api'
+  import { formatAndSanitizeMarkdown } from '@/utils/markdown'
 
-interface Message {
-  type: 'user' | 'bot'
-  content: string
-  timestamp: Date
-  image?: string
-}
-
-// Reactive data
-const messages = ref<Message[]>([])
-const newMessage = ref('')
-const isTyping = ref(false)
-const messagesContainer = ref<HTMLElement>()
-const fileInput = ref<HTMLInputElement>()
-const selectedFile = ref<File | null>(null)
-const selectedImage = ref<string | null>(null)
-
-// Methods
-const triggerImageUpload = () => {
-  fileInput.value?.click()
-}
-
-const handleImageUpload = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  const file = target.files?.[0]
-  
-  if (file) {
-    selectedFile.value = file
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      selectedImage.value = e.target?.result as string
-    }
-    reader.readAsDataURL(file)
-  }
-}
-
-const sendMessage = async () => {
-  if (!newMessage.value.trim() && !selectedFile.value) return
-
-  const userMessage: Message = {
-    type: 'user',
-    content: selectedFile.value 
-      ? `📷 Uploaded plant image${newMessage.value ? ': ' + newMessage.value : ' for diagnosis'}`
-      : newMessage.value,
-    timestamp: new Date(),
-    image: selectedImage.value || undefined
+  interface Message {
+    type: 'user' | 'bot'
+    content: string
+    timestamp: Date
+    image?: string
   }
 
-  messages.value.push(userMessage)
-  const messageToSend = newMessage.value
-  const fileToSend = selectedFile.value
-  
-  // Clear inputs
-  newMessage.value = ''
-  selectedFile.value = null
-  selectedImage.value = null
-  
-  await scrollToBottom()
-  
-  // Show typing indicator
-  isTyping.value = true
-  
-  try {
-    if (fileToSend) {
-      // Send image for analysis
-      const formData = new FormData()
-      formData.append('file', fileToSend)
+  // Reactive data
+  const messages = ref<Message[]>([])
+  const newMessage = ref('')
+  const isTyping = ref(false)
+  const messagesContainer = ref<HTMLElement>()
+  const fileInput = ref<HTMLInputElement>()
+  const selectedFile = ref<File | null>(null)
+  const selectedImage = ref<string | null>(null)
 
-      const response = await fetch(apiUrl('plant-health'), {
-        method: 'POST',
-        body: formData
+  // Methods
+  function triggerImageUpload () {
+    fileInput.value?.click()
+  }
+
+  function handleImageUpload (event: Event) {
+    const target = event.target as HTMLInputElement
+    const file = target.files?.[0]
+
+    if (file) {
+      selectedFile.value = file
+      const reader = new FileReader()
+      reader.addEventListener('load', e => {
+        selectedImage.value = e.target?.result as string
       })
-
-      const data = await response.json()
-      
-      const botMessage: Message = {
-        type: 'bot',
-        content: data.diagnosis || 'Sorry, I couldn\'t analyze the image. Please try again with a clearer photo.',
-        timestamp: new Date()
-      }
-
-      messages.value.push(botMessage)
-    } else {
-      // Send text message (general plant health advice)
-      const botMessage: Message = {
-        type: 'bot',
-        content: `I'd be happy to help with your plant health question: "${messageToSend}"\n\nFor the most accurate diagnosis, please upload a clear photo of your plant showing the problem areas. This will help me provide specific treatment recommendations.\n\nIn the meantime, here are some general tips:\n• Check soil moisture levels\n• Ensure proper lighting conditions\n• Look for signs of pests or diseases\n• Consider recent changes in care routine`,
-        timestamp: new Date()
-      }
-
-      messages.value.push(botMessage)
+      reader.readAsDataURL(file)
     }
-  } catch (error) {
-    const errorMessage: Message = {
-      type: 'bot',
-      content: 'Sorry, I\'m having trouble connecting to the server. Please check if the backend is running and try again.',
-      timestamp: new Date()
+  }
+
+  async function sendMessage () {
+    if (!newMessage.value.trim() && !selectedFile.value) return
+
+    const userMessage: Message = {
+      type: 'user',
+      content: selectedFile.value
+        ? `📷 Uploaded plant image${newMessage.value ? ': ' + newMessage.value : ' for diagnosis'}`
+        : newMessage.value,
+      timestamp: new Date(),
+      image: selectedImage.value || undefined,
     }
-    messages.value.push(errorMessage)
-  } finally {
-    isTyping.value = false
+
+    messages.value.push(userMessage)
+    const messageToSend = newMessage.value
+    const fileToSend = selectedFile.value
+
+    // Clear inputs
+    newMessage.value = ''
+    selectedFile.value = null
+    selectedImage.value = null
+
     await scrollToBottom()
-  }
-}
 
-const scrollToBottom = async () => {
-  await nextTick()
-  if (messagesContainer.value) {
-    messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight
-  }
-}
+    // Show typing indicator
+    isTyping.value = true
 
-const formatTime = (date: Date) => {
-  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-}
+    try {
+      if (fileToSend) {
+        // Send image for analysis
+        const formData = new FormData()
+        formData.append('file', fileToSend)
+
+        const response = await fetch(apiUrl('plant-health'), {
+          method: 'POST',
+          body: formData,
+        })
+
+        const data = await response.json()
+
+        const botMessage: Message = {
+          type: 'bot',
+          content: data.diagnosis || 'Sorry, I couldn\'t analyze the image. Please try again with a clearer photo.',
+          timestamp: new Date(),
+        }
+
+        messages.value.push(botMessage)
+      } else {
+        // Send text message (general plant health advice)
+        const botMessage: Message = {
+          type: 'bot',
+          content: `I'd be happy to help with your plant health question: "${messageToSend}"\n\nFor the most accurate diagnosis, please upload a clear photo of your plant showing the problem areas. This will help me provide specific treatment recommendations.\n\nIn the meantime, here are some general tips:\n• Check soil moisture levels\n• Ensure proper lighting conditions\n• Look for signs of pests or diseases\n• Consider recent changes in care routine`,
+          timestamp: new Date(),
+        }
+
+        messages.value.push(botMessage)
+      }
+    } catch {
+      const errorMessage: Message = {
+        type: 'bot',
+        content: 'Sorry, I\'m having trouble connecting to the server. Please check if the backend is running and try again.',
+        timestamp: new Date(),
+      }
+      messages.value.push(errorMessage)
+    } finally {
+      isTyping.value = false
+      await scrollToBottom()
+    }
+  }
+
+  async function scrollToBottom () {
+    await nextTick()
+    if (messagesContainer.value) {
+      messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight
+    }
+  }
+
+  function formatTime (date: Date) {
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+  }
 </script>
 
 <style scoped>

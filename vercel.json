@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "client/package.json", "use": "@vercel/static-build", "config": { "distDir": "dist" } },
+    { "src": "api/**/*.py", "use": "@vercel/python" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/(.*)", "dest": "/client/dist/index.html" }
+  ],
+  "env": {
+    "VITE_API_BASE_URL": "/api",
+    "MAX_UPLOAD_MB": "8",
+    "RATE_LIMIT": "100 per minute",
+    "CHAT_RATE_LIMIT": "20 per minute",
+    "CROP_RATE_LIMIT": "10 per minute",
+    "PLANT_HEALTH_RATE_LIMIT": "8 per minute"
+  }
+}
