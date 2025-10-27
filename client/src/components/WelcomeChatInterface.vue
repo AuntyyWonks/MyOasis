@@ -189,6 +189,7 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
 import { formatAndSanitizeMarkdown } from '@/utils/markdown'
+import { apiUrl } from '@/utils/api'
 
 interface Message {
   type: 'user' | 'bot'
@@ -222,7 +223,7 @@ const sendMessage = async () => {
   isTyping.value = true
   
   try {
-    const response = await fetch('http://localhost:5000/chat', {
+    const response = await fetch(apiUrl('chat'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -278,6 +278,7 @@
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
+import { apiUrl } from '@/utils/api'
 
 interface Analysis {
   image: string
@@ -353,7 +354,7 @@ const analyzeImage = async () => {
     const formData = new FormData()
     formData.append('file', selectedFile.value)
 
-    const response = await fetch('http://127.0.0.1:5000/plant-health', {
+    const response = await fetch(apiUrl('plant-health'), {
       method: 'POST',
       body: formData
     })

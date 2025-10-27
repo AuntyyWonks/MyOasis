@@ -254,6 +254,7 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
+import { apiUrl } from '@/utils/api'
 
 interface CropRecommendations {
   recommendations_text: string
@@ -338,7 +339,7 @@ Additional Information: ${formData.additionalInfo}
   `.trim()
 
   try {
-    const response = await fetch('http://127.0.0.1:5000/crop-plan', {
+    const response = await fetch(apiUrl('crop-plan'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

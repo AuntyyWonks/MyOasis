@@ -205,6 +205,7 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
 import { formatAndSanitizeMarkdown } from '@/utils/markdown'
+import { apiUrl } from '@/utils/api'
 
 interface Message {
   type: 'user' | 'bot'
@@ -273,7 +274,7 @@ const sendMessage = async () => {
       const formData = new FormData()
       formData.append('file', fileToSend)
 
-      const response = await fetch('http://127.0.0.1:5000/plant-health', {
+      const response = await fetch(apiUrl('plant-health'), {
         method: 'POST',
         body: formData
       })
