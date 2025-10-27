@@ -2,8 +2,8 @@ import React from 'react'
 
 function PromptBar() {
   return (
-    <div className="w-full h-34 flex flex-col justify-between rounded-[2.5rem] border border-white/35 backdrop-blur-[1.5px] bg-black/15">
-      <div className='w-40 h-10'></div>
+    <form className="w-full flex flex-col gap-4 py-4 justify-between rounded-[2.5rem] border border-white/35 backdrop-blur-[1.5px] bg-black/15">
+      <textarea className='flex-1 ml-6 mr-12 bg-transparent outline-none resize-none text-gray-300 overflow-hidden' placeholder='Ask Oasis to help you plant...' rows={5}></textarea>
       <div className='h-10 flex items-start justify-between gap-2 px-5 bg-yellow-500/0 text-[#B4B4AE] text-sm'>
         <div className='flex items-start gap-2'>
           <button className='p-2 rounded-full bg-[#232323] border border-[#70706F] cursor-pointer'><img src='/icons/add.svg' alt='add-icon' width={10} height={10} /></button>
@@ -20,7 +20,7 @@ function PromptBar() {
           <button className='p-2 rounded-full bg-[#70706F] border border-[#70706fc2] cursor-pointer'><img src='/icons/submit.svg' alt='submit-icon' width={8} height={8}/></button>
         </div>
       </div>
-    </div>
+    </form>
   )
 }
 
