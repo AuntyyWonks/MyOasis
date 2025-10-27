@@ -36,11 +36,18 @@ cd ..
 :: Step 2: Start Frontend
 :: -----------------------------
 echo [2/3] Waiting for backend to initialize...
-timeout /t 5 /nobreak > nul
 
-echo [3/3] Starting Frontend Development Server...
-cd client
-start cmd /k "npm run dev"
+echo [3/3] Installing frontend dependencies and starting Dev Server...
+cd client-react
+
+:: Install dependencies if node_modules does not exist
+if not exist node_modules (
+    echo Installing frontend dependencies...
+    npm install
+)
+
+:: Start dev server in the same terminal
+npm run dev
 
 cd ..
 
